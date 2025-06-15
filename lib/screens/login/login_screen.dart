@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'logo_clinicasa.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -36,6 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final theme = Theme.of(context);
     final green = theme.colorScheme.primary;
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -45,33 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 const SizedBox(height: 16),
                 // Logo
-                Column(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/images/logo_clinicasa.svg',
-                      height: 110,
-                    ),
-                    const SizedBox(height: 8),
-                    RichText(
-                      text: TextSpan(
-                        style: theme.textTheme.headlineMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Inter',
-                        ),
-                        children: [
-                          TextSpan(
-                            text: 'Clini',
-                            style: TextStyle(color: green),
-                          ),
-                          const TextSpan(
-                            text: 'Casa',
-                            style: TextStyle(color: Colors.black87),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                const LogoClinicasa(),
                 const SizedBox(height: 32),
                 Form(
                   key: _formKey,

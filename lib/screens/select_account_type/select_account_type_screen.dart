@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../login/logo_clinicasa.dart';
 
 class SelectAccountTypeScreen extends StatelessWidget {
   const SelectAccountTypeScreen({super.key});
@@ -9,137 +10,119 @@ class SelectAccountTypeScreen extends StatelessWidget {
     final theme = Theme.of(context);
     final green = theme.colorScheme.primary;
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 16),
-              // Logo
-              Column(
-                children: [
-                  SvgPicture.asset(
-                    'assets/images/logo_clinicasa.svg',
-                    height: 110,
-                  ),
-                  const SizedBox(height: 8),
-                  RichText(
-                    text: TextSpan(
-                      style: theme.textTheme.headlineMedium?.copyWith(
+              const SizedBox(height: 32),
+              Center(
+                child: LogoClinicasa(onTap: () => Navigator.of(context).pop()),
+              ),
+              const SizedBox(height: 32),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Selecione o tipo de cadastro',
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        color: green,
                         fontWeight: FontWeight.bold,
-                        fontFamily: 'Inter',
+                        fontSize: 20,
                       ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 32),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        TextSpan(
-                          text: 'Clini',
-                          style: TextStyle(color: green),
+                        Expanded(
+                          child: Container(
+                            margin: const EdgeInsets.only(right: 12),
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: green,
+                                foregroundColor: Colors.white,
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 32,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                elevation: 0,
+                              ),
+                              child: Column(
+                                children: [
+                                  Icon(
+                                    Icons.person,
+                                    size: 48,
+                                    color: Colors.white,
+                                  ),
+                                  const SizedBox(height: 8),
+                                  const Text(
+                                    'Pessoal',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
-                        const TextSpan(
-                          text: 'Casa',
-                          style: TextStyle(color: Colors.black87),
+                        Expanded(
+                          child: Container(
+                            margin: const EdgeInsets.only(left: 12),
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: green,
+                                foregroundColor: Colors.white,
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 32,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                elevation: 0,
+                              ),
+                              child: Column(
+                                children: [
+                                  Icon(
+                                    Icons.medical_services,
+                                    size: 48,
+                                    color: Colors.white,
+                                  ),
+                                  const SizedBox(height: 8),
+                                  const Text(
+                                    'Profissional',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 32),
-              Text(
-                'Selecione o tipo de cadastro',
-                style: theme.textTheme.titleMedium?.copyWith(
-                  color: green,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
+                  ],
                 ),
-                textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 32),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: green,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 32),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      child: Column(
-                        children: [
-                          Icon(Icons.person, size: 48, color: Colors.white),
-                          const SizedBox(height: 8),
-                          const Text(
-                            'Pessoal',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 24),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: green,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 32),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.medical_services,
-                            size: 48,
-                            color: Colors.white,
-                          ),
-                          const SizedBox(height: 8),
-                          const Text(
-                            'Profissional',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 32),
-              OutlinedButton(
-                onPressed: () => Navigator.of(context).pop(),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: green,
-                  side: BorderSide(color: green),
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24),
-                  ),
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                ),
-                child: const Text('Voltar'),
-              ),
-              const Spacer(),
               Column(
                 children: [
                   Text(
                     'Não sabe qual o tipo de perfil ideal para você?',
-                    style: theme.textTheme.bodyMedium,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: Colors.black87,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                   TextButton(
@@ -152,6 +135,7 @@ class SelectAccountTypeScreen extends StatelessWidget {
                   ),
                 ],
               ),
+              const SizedBox(height: 16),
             ],
           ),
         ),

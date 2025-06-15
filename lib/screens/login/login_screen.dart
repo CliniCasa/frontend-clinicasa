@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -38,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32),
+            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -46,7 +47,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 // Logo
                 Column(
                   children: [
-                    Icon(Icons.home, size: 90, color: green),
+                    SvgPicture.asset(
+                      'assets/images/logo_clinicasa.svg',
+                      height: 110,
+                    ),
                     const SizedBox(height: 8),
                     RichText(
                       text: TextSpan(
@@ -143,8 +147,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           onPressed: () {},
                           style: TextButton.styleFrom(
                             foregroundColor: Colors.grey,
+                            padding: EdgeInsets.zero,
+                            minimumSize: const Size(0, 0),
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
-                          child: const Text('Esqueceu sua senha?'),
+                          child: const Text(' ?'),
                         ),
                       ),
                       if (_errorMessage != null)
@@ -155,24 +162,20 @@ class _LoginScreenState extends State<LoginScreen> {
                             style: const TextStyle(color: Colors.red),
                           ),
                         ),
+                      const SizedBox(height: 8),
                       SizedBox(
                         height: 48,
                         child: ElevatedButton(
                           onPressed: _login,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                (_emailController.text ==
-                                        'joao_pedro@gmail.com' &&
-                                    _passwordController.text == '123456')
-                                ? green
-                                : Colors.grey,
+                            backgroundColor: green,
                             foregroundColor: Colors.white,
                             textStyle: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
                             ),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(12),
                             ),
                           ),
                           child: const Text('Entrar'),
@@ -181,7 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 32),
                 Row(
                   children: [
                     const Expanded(child: Divider()),
@@ -199,23 +202,47 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    IconButton(
-                      icon: Icon(Icons.g_mobiledata, color: green, size: 36),
-                      onPressed: () {},
+                    CircleAvatar(
+                      backgroundColor: green,
+                      radius: 22,
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.g_mobiledata,
+                          color: Colors.white,
+                          size: 32,
+                        ),
+                        onPressed: () {},
+                      ),
                     ),
                     const SizedBox(width: 16),
-                    IconButton(
-                      icon: Icon(Icons.phone, color: green, size: 32),
-                      onPressed: () {},
+                    CircleAvatar(
+                      backgroundColor: green,
+                      radius: 22,
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.phone,
+                          color: Colors.white,
+                          size: 24,
+                        ),
+                        onPressed: () {},
+                      ),
                     ),
                     const SizedBox(width: 16),
-                    IconButton(
-                      icon: Icon(Icons.fingerprint, color: green, size: 32),
-                      onPressed: () {},
+                    CircleAvatar(
+                      backgroundColor: green,
+                      radius: 22,
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.fingerprint,
+                          color: Colors.white,
+                          size: 24,
+                        ),
+                        onPressed: () {},
+                      ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 32),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

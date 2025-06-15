@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SelectAccountTypeScreen extends StatelessWidget {
   const SelectAccountTypeScreen({super.key});
@@ -18,19 +19,32 @@ class SelectAccountTypeScreen extends StatelessWidget {
               // Logo
               Column(
                 children: [
-                  Icon(Icons.home, size: 70, color: green),
-                  const SizedBox(height: 4),
-                  Text(
-                    'CliniCasa',
-                    style: theme.textTheme.titleLarge?.copyWith(
-                      color: green,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Inter',
+                  SvgPicture.asset(
+                    'assets/images/logo_clinicasa.svg',
+                    height: 110,
+                  ),
+                  const SizedBox(height: 8),
+                  RichText(
+                    text: TextSpan(
+                      style: theme.textTheme.headlineMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Inter',
+                      ),
+                      children: [
+                        TextSpan(
+                          text: 'Clini',
+                          style: TextStyle(color: green),
+                        ),
+                        const TextSpan(
+                          text: 'Casa',
+                          style: TextStyle(color: Colors.black87),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 32),
               Text(
                 'Selecione o tipo de cadastro',
                 style: theme.textTheme.titleMedium?.copyWith(

@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const LoginScreen(),
+      debugShowCheckedModeBanner: false,
       routes: {'/select_account_type': (_) => const SelectAccountTypeScreen()},
     );
   }

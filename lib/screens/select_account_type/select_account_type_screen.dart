@@ -19,12 +19,15 @@ class SelectAccountTypeScreen extends StatelessWidget {
             children: [
               const SizedBox(height: 32),
               Center(
-                child: LogoClinicasa(onTap: () => Navigator.of(context).pop()),
+                child: LogoClinicasa(
+                  onTap: () => Navigator.of(
+                    context,
+                  ).pushNamedAndRemoveUntil('/', (route) => false),
+                ),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 56),
               Expanded(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       'Selecione o tipo de cadastro',

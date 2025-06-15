@@ -117,6 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           return null;
                         },
                       ),
+                      const SizedBox(height: 4),
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
@@ -127,7 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             minimumSize: const Size(0, 0),
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
-                          child: const Text(' ?'),
+                          child: const Text('Esqueceu sua senha?'),
                         ),
                       ),
                       if (_errorMessage != null)

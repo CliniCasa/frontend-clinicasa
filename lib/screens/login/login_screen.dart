@@ -23,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_formKey.currentState!.validate()) {
       if (_emailController.text == 'joao_pedro@gmail.com' &&
           _passwordController.text == '123456') {
-        Navigator.of(context).pushReplacementNamed('/select_account_type');
+        Navigator.of(context).pushReplacementNamed('/home');
       } else {
         setState(() {
           _errorMessage = 'E-mail ou senha inválidos';
@@ -242,7 +242,11 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Center(
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(
+                      context,
+                    ).pushReplacementNamed('/select_account_type');
+                  },
                   style: TextButton.styleFrom(
                     foregroundColor: green,
                     textStyle: const TextStyle(fontWeight: FontWeight.bold),

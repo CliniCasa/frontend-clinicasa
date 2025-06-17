@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'screens/login/login_screen.dart';
-import 'screens/select_account_type/select_account_type_screen.dart';
+import 'screens/login-configure/select_account_type_screen.dart';
+import 'screens/login-configure/personal_data_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,7 +37,10 @@ class MyApp extends StatelessWidget {
       ),
       home: const LoginScreen(),
       debugShowCheckedModeBanner: false,
-      routes: {'/select_account_type': (_) => const SelectAccountTypeScreen()},
+      routes: {
+        '/select_account_type': (_) => const SelectAccountTypeScreen(),
+        '/personal_data': (_) => const PersonalDataScreen(),
+      },
     );
   }
 }

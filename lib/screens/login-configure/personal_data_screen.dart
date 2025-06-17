@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'address_screen.dart';
 import '../../widgets/logo_clinicasa.dart';
 
 class PersonalDataScreen extends StatefulWidget {
@@ -127,8 +128,9 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
 
   void _submit() {
     if (_formKey.currentState!.validate()) {
-      // Aqui você pode prosseguir para a próxima etapa
-      // Exemplo: Navigator.of(context).pushNamed('/next_step');
+      Navigator.of(
+        context,
+      ).push(MaterialPageRoute(builder: (context) => const AddressScreen()));
     }
   }
 

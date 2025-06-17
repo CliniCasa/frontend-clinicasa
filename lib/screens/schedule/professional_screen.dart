@@ -10,6 +10,15 @@ class ProfessionalScreen extends StatelessWidget {
     const black = Color(0xFF35393C);
     const gray = Color(0xFF878787);
 
+    final List<String> servicos = [
+      'Quiropraxia',
+      'Massagem',
+      'Fisioterapia',
+      'Acupuntura',
+      'Terapia Ocupacional',
+    ];
+    String selectedServico = servicos[0];
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -50,7 +59,7 @@ class ProfessionalScreen extends StatelessWidget {
                       CircleAvatar(
                         radius: 48,
                         backgroundImage: NetworkImage(
-                          'https://randomuser.me/api/portraits/women/44.jpg',
+                          'https://randomuser.me/api/portraits/women/28.jpg',
                         ),
                       ),
                       const SizedBox(height: 16),
@@ -58,22 +67,46 @@ class ProfessionalScreen extends StatelessWidget {
                       Text(
                         'Ana Maria',
                         style: theme.textTheme.headlineSmall?.copyWith(
-                          color: green,
-                          fontWeight: FontWeight.bold,
+                          color: black,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                       const SizedBox(height: 8),
+                      // Descrição
+                      Text(
+                        'Especialista em quiropraxia e terapias manuais. Atendimento humanizado e focado no bem-estar do paciente.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color(0xFF878787),
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                          fontFamily: 'Inter',
+                        ),
+                      ),
+                      const SizedBox(height: 16),
                       // Estrelas
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(
-                          5,
-                          (index) => const Icon(
-                            Icons.star,
-                            color: Color(0xFFFFC107),
-                            size: 32,
+                        children: [
+                          ...List.generate(
+                            5,
+                            (index) => const Icon(
+                              Icons.star,
+                              color: Color(0xFFFFC107),
+                              size: 32,
+                            ),
                           ),
-                        ),
+                          const SizedBox(width: 6),
+                          Text(
+                            '5.0',
+                            style: TextStyle(
+                              color: Color(0xFFFFC107),
+                              fontWeight: FontWeight.w600,
+                              fontSize: 22,
+                              fontFamily: 'Inter',
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 32),
                       // Serviços
@@ -90,38 +123,43 @@ class ProfessionalScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 8),
-                      Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 16,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: gray.withOpacity(0.5)),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.info_outline,
-                              color: gray,
-                              size: 20,
-                            ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Text(
-                                'Quiropraxia',
-                                style: theme.textTheme.bodyMedium?.copyWith(
-                                  color: black,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 15,
-                                  fontFamily: 'Inter',
+                      DropdownButtonFormField<String>(
+                        value: selectedServico,
+                        items: servicos
+                            .map(
+                              (servico) => DropdownMenuItem(
+                                value: servico,
+                                child: Text(
+                                  servico,
+                                  style: theme.textTheme.bodyMedium?.copyWith(
+                                    color: black,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 15,
+                                    fontFamily: 'Inter',
+                                  ),
                                 ),
                               ),
+                            )
+                            .toList(),
+                        onChanged: (value) {},
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 16,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: gray.withOpacity(0.5),
                             ),
-                            const Icon(Icons.close, color: gray, size: 20),
-                          ],
+                          ),
                         ),
+                        icon: const Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                          color: Color(0xFF878787),
+                        ),
+                        dropdownColor: Colors.white,
+                        isExpanded: true,
                       ),
                       const SizedBox(height: 32),
                       // Avaliações
@@ -170,14 +208,26 @@ class ProfessionalScreen extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 2),
                                   Row(
-                                    children: List.generate(
-                                      5,
-                                      (index) => const Icon(
-                                        Icons.star,
-                                        color: Color(0xFFFFC107),
-                                        size: 18,
+                                    children: [
+                                      ...List.generate(
+                                        5,
+                                        (index) => const Icon(
+                                          Icons.star,
+                                          color: Color(0xFFFFC107),
+                                          size: 18,
+                                        ),
                                       ),
-                                    ),
+                                      const SizedBox(width: 6),
+                                      Text(
+                                        '5.0',
+                                        style: TextStyle(
+                                          color: Color(0xFFFFC107),
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14,
+                                          fontFamily: 'Inter',
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   const SizedBox(height: 4),
                                   Text(

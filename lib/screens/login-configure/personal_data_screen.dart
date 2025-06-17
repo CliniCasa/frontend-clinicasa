@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'address_screen.dart';
-import '../../widgets/logo_clinicasa.dart';
 
 class PersonalDataScreen extends StatefulWidget {
   const PersonalDataScreen({super.key});
@@ -250,6 +249,8 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                               }
                             });
                           },
+                          dropdownColor: Colors.white,
+                          isExpanded: true,
                         ),
                         if (_selectedGender == 'outro') ...[
                           const SizedBox(height: 8),

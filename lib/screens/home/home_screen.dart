@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../widgets/logo_clinicasa.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -20,7 +19,12 @@ class HomeScreen extends StatelessWidget {
           children: [
             // Top bar
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              padding: const EdgeInsets.only(
+                left: 24,
+                right: 24,
+                top: 32,
+                bottom: 24,
+              ),
               child: Row(
                 children: [
                   Expanded(
@@ -31,8 +35,8 @@ class HomeScreen extends StatelessWidget {
                           'Rua das Flores, 123',
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: black,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14,
                             fontFamily: 'Inter',
                           ),
                         ),
@@ -55,77 +59,77 @@ class HomeScreen extends StatelessWidget {
             ),
             // Categorias
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: SizedBox(
-                height: 110,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: Row(
-                              children: [
-                                _CategoryButton(
-                                  icon: Icons.healing_rounded,
-                                  label: 'Fisioterapeutas',
-                                  color: green,
-                                  background: green10,
-                                ),
-                                const SizedBox(width: 12),
-                                _CategoryButton(
-                                  icon: Icons.elderly_rounded,
-                                  label: 'Cuidadores',
-                                  color: green,
-                                  background: green10,
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          Expanded(
-                            child: Row(
-                              children: [
-                                _CategoryButton(
-                                  icon: Icons.spa_rounded,
-                                  label: 'Massagistas',
-                                  color: green,
-                                  background: green10,
-                                ),
-                                const SizedBox(width: 12),
-                                _CategoryButton(
-                                  icon: Icons.psychology_rounded,
-                                  label: 'Psicólogos',
-                                  color: green,
-                                  background: green10,
-                                ),
-                                const SizedBox(width: 12),
-                                _CategoryButton(
-                                  icon: Icons.medical_services_rounded,
-                                  label: 'Exames',
-                                  color: green,
-                                  background: green10,
-                                ),
-                                const SizedBox(width: 12),
-                                _CategoryButton(
-                                  icon: Icons.more_horiz,
-                                  label: 'Diversos',
-                                  color: green,
-                                  background: green10,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _CategoryButton(
+                          icon: Icons.fitness_center,
+                          label: 'Fisioterapeutas',
+                          color: green,
+                          background: green10,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _CategoryButton(
+                          icon: Icons.wash,
+                          label: 'Massagistas',
+                          color: green,
+                          background: green10,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _CategoryButton(
+                          icon: Icons.elderly_woman,
+                          label: 'Cuidadores',
+                          color: green,
+                          background: green10,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _CategoryButton(
+                          icon: Icons.self_improvement,
+                          label: 'Psicólogos',
+                          color: green,
+                          background: green10,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _CategoryButton(
+                          icon: Icons.medication,
+                          label: 'Exames',
+                          color: green,
+                          background: green10,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _CategoryButton(
+                          icon: Icons.more_horiz_outlined,
+                          label: 'Diversos',
+                          color: green,
+                          background: green10,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
             // Seus últimos serviços
+            const SizedBox(height: 32),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -133,94 +137,117 @@ class HomeScreen extends StatelessWidget {
                     'Seus últimos serviços',
                     style: theme.textTheme.titleMedium?.copyWith(
                       color: black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
                       fontFamily: 'Inter',
                     ),
                   ),
-                  Text(
-                    'Ver todos >',
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: green,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14,
-                      fontFamily: 'Inter',
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        'Ver todos',
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: green,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12,
+                          fontFamily: 'Inter',
+                        ),
+                      ),
+                      const SizedBox(width: 1),
+                      Icon(Icons.chevron_right_rounded, color: green, size: 16),
+                    ],
                   ),
                 ],
               ),
             ),
             SizedBox(
-              height: 80,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                children: [
-                  _ServiceAvatar(
-                    name: 'Ana Maria',
-                    role: 'Fisioterapia',
-                    image: null,
-                    color: green,
-                    black: black,
-                    gray: gray,
-                  ),
-                  _ServiceAvatar(
-                    name: 'João Silva',
-                    role: 'Fisioterapia',
-                    image: null,
-                    color: green,
-                    black: black,
-                    gray: gray,
-                  ),
-                  _ServiceAvatar(
-                    name: 'Ana Maria',
-                    role: 'Fisioterapia',
-                    image: null,
-                    color: green,
-                    black: black,
-                    gray: gray,
-                  ),
-                  _ServiceAvatar(
-                    name: 'Miguel de Oliveira',
-                    role: 'Cuidador',
-                    image: null,
-                    color: green,
-                    black: black,
-                    gray: gray,
-                  ),
-                ],
+              height: 160,
+              child: Center(
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  children: [
+                    _ServiceAvatar(
+                      name: 'Miguel Aba',
+                      role: 'Cuidador',
+                      image: null,
+                      color: green,
+                      black: black,
+                      gray: gray,
+                    ),
+                    _ServiceAvatar(
+                      name: 'Julia Lima',
+                      role: 'Psicólogo',
+                      image: null,
+                      color: green,
+                      black: black,
+                      gray: gray,
+                    ),
+                    _ServiceAvatar(
+                      name: 'João Silva',
+                      role: 'Fisioterapia',
+                      image: null,
+                      color: green,
+                      black: black,
+                      gray: gray,
+                    ),
+                    _ServiceAvatar(
+                      name: 'Ana Maria',
+                      role: 'Fisioterapia',
+                      image: null,
+                      color: green,
+                      black: black,
+                      gray: gray,
+                    ),
+                    _ServiceAvatar(
+                      name: 'Miguel Aba',
+                      role: 'Cuidador',
+                      image: null,
+                      color: green,
+                      black: black,
+                      gray: gray,
+                    ),
+                  ],
+                ),
               ),
             ),
             // Os melhores perto de você
+            const SizedBox(height: 0),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Os melhores perto de você!',
+                    'Os melhores próximos de você!',
                     style: theme.textTheme.titleMedium?.copyWith(
                       color: black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
                       fontFamily: 'Inter',
                     ),
                   ),
-                  Text(
-                    'Ver todos >',
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: green,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14,
-                      fontFamily: 'Inter',
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        'Ver todos',
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: green,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12,
+                          fontFamily: 'Inter',
+                        ),
+                      ),
+                      const SizedBox(width: 1),
+                      Icon(Icons.chevron_right_rounded, color: green, size: 16),
+                    ],
                   ),
                 ],
               ),
             ),
             Expanded(
               child: ListView(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 24),
                 children: [
                   _BestNearYouTile(
                     name: 'Ana Maria',
@@ -284,29 +311,27 @@ class _CategoryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        height: 48,
-        decoration: BoxDecoration(
-          color: background,
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, color: color, size: 28),
-            const SizedBox(height: 4),
-            Text(
-              label,
-              style: TextStyle(
-                color: color,
-                fontWeight: FontWeight.w600,
-                fontSize: 14,
-                fontFamily: 'Inter',
-              ),
+    return Container(
+      height: 74,
+      decoration: BoxDecoration(
+        color: background,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, color: color, size: 24),
+          const SizedBox(height: 4),
+          Text(
+            label,
+            style: TextStyle(
+              color: color,
+              fontWeight: FontWeight.w500,
+              fontSize: 12,
+              fontFamily: 'Inter',
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -331,36 +356,43 @@ class _ServiceAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 16),
-      child: Column(
-        children: [
-          CircleAvatar(
-            radius: 24,
-            backgroundColor: color.withOpacity(0.15),
-            child: image == null
-                ? Icon(Icons.person, color: color, size: 28)
-                : null,
+      padding: const EdgeInsets.only(right: 8),
+      child: SizedBox(
+        height: 104,
+        width: 96,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                radius: 24,
+                backgroundColor: color.withOpacity(0.15),
+                child: image == null
+                    ? Icon(Icons.person, color: color, size: 24)
+                    : null,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                name,
+                style: TextStyle(
+                  color: black,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                  fontFamily: 'Inter',
+                ),
+              ),
+              Text(
+                role,
+                style: TextStyle(
+                  color: gray,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                  fontFamily: 'Inter',
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 4),
-          Text(
-            name,
-            style: TextStyle(
-              color: black,
-              fontWeight: FontWeight.w600,
-              fontSize: 13,
-              fontFamily: 'Inter',
-            ),
-          ),
-          Text(
-            role,
-            style: TextStyle(
-              color: gray,
-              fontWeight: FontWeight.w400,
-              fontSize: 11,
-              fontFamily: 'Inter',
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -387,11 +419,11 @@ class _BestNearYouTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.only(bottom: 24),
       child: Row(
         children: [
           CircleAvatar(
-            radius: 24,
+            radius: 32,
             backgroundColor: color.withOpacity(0.15),
             child: image == null
                 ? Icon(Icons.person, color: color, size: 28)
@@ -409,31 +441,36 @@ class _BestNearYouTile extends StatelessWidget {
                       style: TextStyle(
                         color: black,
                         fontWeight: FontWeight.w600,
-                        fontSize: 15,
-                        fontFamily: 'Inter',
-                      ),
-                    ),
-                    const SizedBox(width: 4),
-                    Icon(Icons.star, color: Color(0xFFFFC107), size: 16),
-                    Text(
-                      rating.toStringAsFixed(1),
-                      style: TextStyle(
-                        color: color,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13,
+                        fontSize: 14,
                         fontFamily: 'Inter',
                       ),
                     ),
                   ],
                 ),
-                Text(
-                  role,
-                  style: TextStyle(
-                    color: gray,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 13,
-                    fontFamily: 'Inter',
-                  ),
+                const SizedBox(height: 4),
+                Row(
+                  children: [
+                    Icon(Icons.star, color: Color(0xFFFFC107), size: 16),
+                    Text(
+                      rating.toStringAsFixed(1),
+                      style: TextStyle(
+                        color: Color(0xFFFFC107),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                        fontFamily: 'Inter',
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      role,
+                      style: TextStyle(
+                        color: gray,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        fontFamily: 'Inter',
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

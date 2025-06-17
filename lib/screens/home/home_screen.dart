@@ -9,6 +9,7 @@ class HomeScreen extends StatelessWidget {
     final green = theme.colorScheme.primary;
     const black = Color(0xFF35393C);
     const gray = Color(0xFF878787);
+    const grayNavbar = Color(0xFFA5A5A5);
     final green10 = green.withOpacity(0.10);
 
     return Scaffold(
@@ -289,7 +290,12 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             // Bottom navigation
-            _BottomNavBar(green: green, black: black, gray: gray),
+            _BottomNavBar(
+              green: green,
+              black: black,
+              gray: gray,
+              grayNavbar: grayNavbar,
+            ),
           ],
         ),
       ),
@@ -485,10 +491,12 @@ class _BottomNavBar extends StatelessWidget {
   final Color green;
   final Color black;
   final Color gray;
+  final Color grayNavbar;
   const _BottomNavBar({
     required this.green,
     required this.black,
     required this.gray,
+    required this.grayNavbar,
   });
 
   @override
@@ -515,6 +523,7 @@ class _BottomNavBar extends StatelessWidget {
             color: green,
             black: black,
             gray: gray,
+            grayNavbar: grayNavbar,
           ),
           _NavBarItem(
             icon: Icons.search_rounded,
@@ -523,22 +532,25 @@ class _BottomNavBar extends StatelessWidget {
             color: green,
             black: black,
             gray: gray,
+            grayNavbar: grayNavbar,
           ),
           _NavBarItem(
-            icon: Icons.calendar_today_rounded,
+            icon: Icons.calendar_month_outlined,
             label: 'Consultas',
             selected: false,
             color: green,
             black: black,
             gray: gray,
+            grayNavbar: grayNavbar,
           ),
           _NavBarItem(
-            icon: Icons.person_rounded,
+            icon: Icons.person_outlined,
             label: 'Perfil',
             selected: false,
             color: green,
             black: black,
             gray: gray,
+            grayNavbar: grayNavbar,
           ),
         ],
       ),
@@ -553,6 +565,7 @@ class _NavBarItem extends StatelessWidget {
   final Color color;
   final Color black;
   final Color gray;
+  final Color grayNavbar;
   const _NavBarItem({
     required this.icon,
     required this.label,
@@ -560,6 +573,7 @@ class _NavBarItem extends StatelessWidget {
     required this.color,
     required this.black,
     required this.gray,
+    required this.grayNavbar,
   });
 
   @override
@@ -567,12 +581,12 @@ class _NavBarItem extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(icon, color: selected ? color : gray, size: 28),
+        Icon(icon, color: selected ? color : grayNavbar, size: 28),
         const SizedBox(height: 2),
         Text(
           label,
           style: TextStyle(
-            color: selected ? color : gray,
+            color: selected ? color : grayNavbar,
             fontWeight: FontWeight.w600,
             fontSize: 12,
             fontFamily: 'Inter',

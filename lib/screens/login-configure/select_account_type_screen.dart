@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../login/logo_clinicasa.dart';
+import '../../widgets/logo_clinicasa.dart';
 
 class SelectAccountTypeScreen extends StatelessWidget {
   const SelectAccountTypeScreen({super.key});

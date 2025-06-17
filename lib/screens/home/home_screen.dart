@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../schedule/professional_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -168,45 +169,67 @@ class HomeScreen extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   children: [
-                    _ServiceAvatar(
-                      name: 'Miguel Aba',
-                      role: 'Cuidador',
-                      image: null,
-                      color: green,
-                      black: black,
-                      gray: gray,
+                    GestureDetector(
+                      onTap: () =>
+                          Navigator.of(context).pushNamed('/professional'),
+                      child: _ServiceAvatar(
+                        name: 'Miguel Aba',
+                        role: 'Cuidador',
+                        image: 'https://randomuser.me/api/portraits/men/33.jpg',
+                        color: green,
+                        black: black,
+                        gray: gray,
+                      ),
                     ),
-                    _ServiceAvatar(
-                      name: 'Julia Lima',
-                      role: 'Psicólogo',
-                      image: null,
-                      color: green,
-                      black: black,
-                      gray: gray,
+                    GestureDetector(
+                      onTap: () =>
+                          Navigator.of(context).pushNamed('/professional'),
+                      child: _ServiceAvatar(
+                        name: 'Julia Lima',
+                        role: 'Psicólogo',
+                        image:
+                            'https://randomuser.me/api/portraits/women/45.jpg',
+                        color: green,
+                        black: black,
+                        gray: gray,
+                      ),
                     ),
-                    _ServiceAvatar(
-                      name: 'João Silva',
-                      role: 'Fisioterapia',
-                      image: null,
-                      color: green,
-                      black: black,
-                      gray: gray,
+                    GestureDetector(
+                      onTap: () =>
+                          Navigator.of(context).pushNamed('/professional'),
+                      child: _ServiceAvatar(
+                        name: 'João Silva',
+                        role: 'Fisioterapia',
+                        image: 'https://randomuser.me/api/portraits/men/32.jpg',
+                        color: green,
+                        black: black,
+                        gray: gray,
+                      ),
                     ),
-                    _ServiceAvatar(
-                      name: 'Ana Maria',
-                      role: 'Fisioterapia',
-                      image: null,
-                      color: green,
-                      black: black,
-                      gray: gray,
+                    GestureDetector(
+                      onTap: () =>
+                          Navigator.of(context).pushNamed('/professional'),
+                      child: _ServiceAvatar(
+                        name: 'Ana Maria',
+                        role: 'Fisioterapia',
+                        image:
+                            'https://randomuser.me/api/portraits/women/44.jpg',
+                        color: green,
+                        black: black,
+                        gray: gray,
+                      ),
                     ),
-                    _ServiceAvatar(
-                      name: 'Miguel Aba',
-                      role: 'Cuidador',
-                      image: null,
-                      color: green,
-                      black: black,
-                      gray: gray,
+                    GestureDetector(
+                      onTap: () =>
+                          Navigator.of(context).pushNamed('/professional'),
+                      child: _ServiceAvatar(
+                        name: 'Miguel Aba',
+                        role: 'Cuidador',
+                        image: 'https://randomuser.me/api/portraits/men/33.jpg',
+                        color: green,
+                        black: black,
+                        gray: gray,
+                      ),
                     ),
                   ],
                 ),
@@ -250,41 +273,57 @@ class HomeScreen extends StatelessWidget {
               child: ListView(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 children: [
-                  _BestNearYouTile(
-                    name: 'Ana Maria',
-                    role: 'Fisioterapia',
-                    rating: 5.0,
-                    image: null,
-                    color: green,
-                    black: black,
-                    gray: gray,
+                  GestureDetector(
+                    onTap: () =>
+                        Navigator.of(context).pushNamed('/professional'),
+                    child: _BestNearYouTile(
+                      name: 'Ana Maria',
+                      role: 'Fisioterapia',
+                      rating: 5.0,
+                      image: 'https://randomuser.me/api/portraits/women/44.jpg',
+                      color: green,
+                      black: black,
+                      gray: gray,
+                    ),
                   ),
-                  _BestNearYouTile(
-                    name: 'João Silva',
-                    role: 'Fisioterapia',
-                    rating: 5.0,
-                    image: null,
-                    color: green,
-                    black: black,
-                    gray: gray,
+                  GestureDetector(
+                    onTap: () =>
+                        Navigator.of(context).pushNamed('/professional'),
+                    child: _BestNearYouTile(
+                      name: 'João Silva',
+                      role: 'Fisioterapia',
+                      rating: 5.0,
+                      image: 'https://randomuser.me/api/portraits/men/32.jpg',
+                      color: green,
+                      black: black,
+                      gray: gray,
+                    ),
                   ),
-                  _BestNearYouTile(
-                    name: 'Miguel de Oliveira',
-                    role: 'Cuidador',
-                    rating: 5.0,
-                    image: null,
-                    color: green,
-                    black: black,
-                    gray: gray,
+                  GestureDetector(
+                    onTap: () =>
+                        Navigator.of(context).pushNamed('/professional'),
+                    child: _BestNearYouTile(
+                      name: 'Miguel de Oliveira',
+                      role: 'Cuidador',
+                      rating: 5.0,
+                      image: 'https://randomuser.me/api/portraits/men/33.jpg',
+                      color: green,
+                      black: black,
+                      gray: gray,
+                    ),
                   ),
-                  _BestNearYouTile(
-                    name: 'Mariana Fernandes',
-                    role: 'Psicóloga',
-                    rating: 5.0,
-                    image: null,
-                    color: green,
-                    black: black,
-                    gray: gray,
+                  GestureDetector(
+                    onTap: () =>
+                        Navigator.of(context).pushNamed('/professional'),
+                    child: _BestNearYouTile(
+                      name: 'Mariana Fernandes',
+                      role: 'Psicóloga',
+                      rating: 5.0,
+                      image: 'https://randomuser.me/api/portraits/women/45.jpg',
+                      color: green,
+                      black: black,
+                      gray: gray,
+                    ),
                   ),
                 ],
               ),
@@ -361,6 +400,7 @@ class _ServiceAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final hasImage = image != null && image!.isNotEmpty;
     return Padding(
       padding: const EdgeInsets.only(right: 8),
       child: SizedBox(
@@ -373,7 +413,8 @@ class _ServiceAvatar extends StatelessWidget {
               CircleAvatar(
                 radius: 24,
                 backgroundColor: color.withOpacity(0.15),
-                child: image == null
+                backgroundImage: hasImage ? NetworkImage(image!) : null,
+                child: !hasImage
                     ? Icon(Icons.person, color: color, size: 24)
                     : null,
               ),
@@ -424,6 +465,7 @@ class _BestNearYouTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final hasImage = image != null && image!.isNotEmpty;
     return Padding(
       padding: const EdgeInsets.only(bottom: 24),
       child: Row(
@@ -431,7 +473,8 @@ class _BestNearYouTile extends StatelessWidget {
           CircleAvatar(
             radius: 32,
             backgroundColor: color.withOpacity(0.15),
-            child: image == null
+            backgroundImage: hasImage ? NetworkImage(image!) : null,
+            child: !hasImage
                 ? Icon(Icons.person, color: color, size: 28)
                 : null,
           ),

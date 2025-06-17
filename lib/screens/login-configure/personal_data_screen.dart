@@ -19,6 +19,8 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
   String _lastPhoneValue = '';
+  String? _selectedGender;
+  final TextEditingController _otherGenderController = TextEditingController();
 
   @override
   void dispose() {
@@ -28,6 +30,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
+    _otherGenderController.dispose();
     super.dispose();
   }
 
@@ -199,19 +202,67 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                           ),
                         ),
                         const SizedBox(height: 8),
-                        TextFormField(
-                          controller: _genderController,
+                        DropdownButtonFormField<String>(
+                          value: _selectedGender,
                           decoration: const InputDecoration(
-                            hintText: 'Ex: Masculino',
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
                               horizontal: 16,
                               vertical: 12,
                             ),
                           ),
-                          validator: (value) =>
-                              _validateOnlyLetters(value, 'sexo'),
+                          hint: const Text('Selecione'),
+                          items: const [
+                            DropdownMenuItem(
+                              value: 'masculino',
+                              child: Text('Masculino'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'feminino',
+                              child: Text('Feminino'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'nao_binario',
+                              child: Text('Não binário'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'prefiro_nao_dizer',
+                              child: Text('Prefiro não dizer'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'outro',
+                              child: Text('Outro'),
+                            ),
+                          ],
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Selecione o gênero';
+                            }
+                            return null;
+                          },
+                          onChanged: (value) {
+                            setState(() {
+                              _selectedGender = value;
+                              if (value != 'outro') {
+                                _otherGenderController.clear();
+                              }
+                            });
+                          },
                         ),
+                        if (_selectedGender == 'outro') ...[
+                          const SizedBox(height: 8),
+                          TextFormField(
+                            controller: _otherGenderController,
+                            decoration: const InputDecoration(
+                              hintText: 'Especifique (opcional)',
+                              border: OutlineInputBorder(),
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 12,
+                              ),
+                            ),
+                          ),
+                        ],
                         const SizedBox(height: 16),
                         Text(
                           'Telefone',

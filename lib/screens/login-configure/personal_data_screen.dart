@@ -18,6 +18,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
   final _confirmPasswordController = TextEditingController();
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
+  String _lastPhoneValue = '';
 
   @override
   void dispose() {
@@ -44,11 +45,51 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
     if (value == null || value.isEmpty) {
       return 'Digite seu telefone';
     }
-    // Aceita apenas números, espaços, parênteses, traços e +
-    if (!RegExp(r'^[0-9\s\-()+]+$').hasMatch(value)) {
+    // Remove tudo que não for número
+    final digits = value.replaceAll(RegExp(r'[^0-9]'), '');
+    if (digits.length != 11) {
       return 'Digite um telefone válido';
     }
+    // Verifica se está no formato (99) 99999-9999
+    if (!RegExp(r'^\(\d{2}\) \d{5}-\d{4}$').hasMatch(value)) {
+      return 'Formato: (99) 99999-9999';
+    }
     return null;
+  }
+
+  void _onPhoneChanged(String value) {
+    // Detecta se está apagando
+    final isDeleting = value.length < _lastPhoneValue.length;
+    _lastPhoneValue = value;
+    if (isDeleting) {
+      // Não aplica máscara ao apagar, deixa o usuário apagar normalmente
+      return;
+    }
+    // Ao digitar, aplica a máscara
+    String digits = value.replaceAll(RegExp(r'[^0-9]'), '');
+    if (digits.length > 11) digits = digits.substring(0, 11);
+    String formatted = '';
+    if (digits.isNotEmpty) {
+      formatted += '(';
+      formatted += digits.substring(0, digits.length >= 2 ? 2 : digits.length);
+      if (digits.length >= 2) formatted += ') ';
+      if (digits.length > 2) {
+        formatted += digits.substring(
+          2,
+          digits.length >= 7 ? 7 : digits.length,
+        );
+      }
+      if (digits.length >= 7) {
+        formatted += '-';
+        formatted += digits.substring(7, digits.length);
+      }
+    }
+    if (formatted != value) {
+      _phoneController.value = TextEditingValue(
+        text: formatted,
+        selection: TextSelection.collapsed(offset: formatted.length),
+      );
+    }
   }
 
   String? _validateEmail(String? value) {
@@ -182,7 +223,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                         TextFormField(
                           controller: _phoneController,
                           decoration: const InputDecoration(
-                            hintText: 'Ex: (11) 91234-5678',
+                            hintText: 'Ex: (19) 99999-9999',
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
                               horizontal: 16,
@@ -191,6 +232,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                           ),
                           keyboardType: TextInputType.phone,
                           validator: _validatePhone,
+                          onChanged: _onPhoneChanged,
                         ),
                         const SizedBox(height: 16),
                         Text(

@@ -13,7 +13,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   int _displayedYear = DateTime.now().year;
   String? _selectedTime;
 
-  final List<String> _horarios = ['08:00', '10:00', '14:00', '16:00'];
+  final List<String> _horarios = ['08:00', '10:00', '14:00', '16:00', '18:00'];
 
   final List<String> _meses = [
     'Janeiro',
@@ -70,7 +70,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
           _selectedDate.year == date.year &&
           _selectedDate.month == date.month &&
           _selectedDate.day == date.day;
-      final now = DateTime.now();
+
+      final now = DateTime.now().subtract(const Duration(days: 1));
       final today = DateTime(now.year, now.month, now.day);
       final isToday = today == DateTime(date.year, date.month, date.day);
       days.add(
@@ -274,26 +275,21 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 ),
               ),
               const SizedBox(height: 8),
-              if (_selectedDate == null)
-                Text(
-                  'Selecione uma data para exibir os horários disponíveis',
-                  style: theme.textTheme.bodyMedium?.copyWith(color: gray),
-                )
-              else
-                Wrap(
-                  spacing: 16,
-                  runSpacing: 16,
-                  children: _horarios.map((horario) {
-                    final isSelected = _selectedTime == horario;
-                    return GestureDetector(
+              Wrap(
+                spacing: 16,
+                runSpacing: 16,
+                children: _horarios.map((horario) {
+                  final isSelected = _selectedTime == horario;
+                  return SizedBox(
+                    width: (MediaQuery.of(context).size.width - 48 - 48) / 4,
+                    height: 56,
+                    child: GestureDetector(
                       onTap: () {
                         setState(() {
                           _selectedTime = horario;
                         });
                       },
                       child: Container(
-                        width: 100,
-                        height: 48,
                         decoration: BoxDecoration(
                           color: isSelected ? green : Colors.white,
                           border: Border.all(color: green, width: 1.5),
@@ -305,15 +301,16 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                             style: TextStyle(
                               color: isSelected ? Colors.white : green,
                               fontWeight: FontWeight.bold,
-                              fontSize: 18,
+                              fontSize: 16,
                               fontFamily: 'Inter',
                             ),
                           ),
                         ),
                       ),
-                    );
-                  }).toList(),
-                ),
+                    ),
+                  );
+                }).toList(),
+              ),
             ],
           ),
         ),

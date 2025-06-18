@@ -13,7 +13,17 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   int _displayedYear = DateTime.now().year;
   String? _selectedTime;
 
-  final List<String> _horarios = ['08:00', '10:00', '14:00', '16:00', '18:00'];
+  final List<String> _horarios = [
+    '08:00',
+    '09:00',
+    '10:00',
+    '14:00',
+    '15:00',
+    '16:00',
+    '17:00',
+    '18:00',
+    '19:00',
+  ];
 
   final List<String> _meses = [
     'Janeiro',
@@ -149,12 +159,11 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+              child: Row(
                 children: [
                   IconButton(
                     icon: const Icon(
@@ -176,229 +185,249 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Serviços',
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    color: black,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
-                    fontFamily: 'Inter',
-                  ),
-                ),
-              ),
-              const SizedBox(height: 8),
-              DropdownButtonFormField<String>(
-                value: selectedServico,
-                items: servicos
-                    .map(
-                      (servico) => DropdownMenuItem(
-                        value: servico,
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
                         child: Text(
-                          servico,
-                          style: theme.textTheme.bodyMedium?.copyWith(
+                          'Serviços',
+                          style: theme.textTheme.titleMedium?.copyWith(
                             color: black,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
                             fontFamily: 'Inter',
                           ),
                         ),
                       ),
-                    )
-                    .toList(),
-                onChanged: (value) {
-                  setState(() {
-                    selectedServico = value;
-                  });
-                },
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 16,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: gray.withOpacity(0.5)),
-                  ),
-                ),
-                icon: const Icon(
-                  Icons.keyboard_arrow_down_rounded,
-                  color: Color(0xFF878787),
-                ),
-                dropdownColor: Colors.white,
-                isExpanded: true,
-              ),
-              const SizedBox(height: 24),
-              Text(
-                'Datas disponíveis',
-                style: theme.textTheme.bodyLarge?.copyWith(
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: const Color(0xFFE0E0E0)),
-                  borderRadius: BorderRadius.circular(12),
-                  color: Colors.white,
-                ),
-                padding: const EdgeInsets.symmetric(
-                  vertical: 12,
-                  horizontal: 8,
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.chevron_left),
-                          onPressed: _goToPreviousMonth,
-                        ),
-                        Text(
-                          '${monthName[0].toUpperCase()}${monthName.substring(1)} ${_displayedYear}',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                            color: black,
-                            fontFamily: 'Inter',
+                      const SizedBox(height: 16),
+                      DropdownButtonFormField<String>(
+                        value: selectedServico,
+                        items: servicos
+                            .map(
+                              (servico) => DropdownMenuItem(
+                                value: servico,
+                                child: Text(
+                                  servico,
+                                  style: theme.textTheme.bodyMedium?.copyWith(
+                                    color: black,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 15,
+                                    fontFamily: 'Inter',
+                                  ),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            selectedServico = value;
+                          });
+                        },
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 16,
                           ),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.chevron_right),
-                          onPressed: _goToNextMonth,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 4),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: const [
-                        Text(
-                          'Dom',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 12,
-                            color: black,
-                          ),
-                        ),
-                        Text(
-                          'Seg',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 12,
-                            color: black,
-                          ),
-                        ),
-                        Text(
-                          'Ter',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 12,
-                            color: black,
-                          ),
-                        ),
-                        Text(
-                          'Qua',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 12,
-                            color: black,
-                          ),
-                        ),
-                        Text(
-                          'Qui',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 12,
-                            color: black,
-                          ),
-                        ),
-                        Text(
-                          'Sex',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 12,
-                            color: black,
-                          ),
-                        ),
-                        Text(
-                          'Sab',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 12,
-                            color: black,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 4),
-                    GridView.count(
-                      crossAxisCount: 7,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      children: _buildCalendarDays(context),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 24),
-              Text(
-                'Horários disponíveis',
-                style: theme.textTheme.bodyLarge?.copyWith(
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Wrap(
-                spacing: 16,
-                runSpacing: 16,
-                children: _horarios.map((horario) {
-                  final isSelected = _selectedTime == horario;
-                  return SizedBox(
-                    width: (MediaQuery.of(context).size.width - 48 - 48) / 4,
-                    height: 56,
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _selectedTime = horario;
-                        });
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: isSelected ? green : Colors.white,
-                          border: Border.all(color: green, width: 1.5),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Center(
-                          child: Text(
-                            horario,
-                            style: TextStyle(
-                              color: isSelected ? Colors.white : green,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                              fontFamily: 'Inter',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: gray.withOpacity(0.5),
                             ),
                           ),
                         ),
+                        icon: const Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                          color: Color(0xFF878787),
+                        ),
+                        dropdownColor: Colors.white,
+                        isExpanded: true,
                       ),
-                    ),
-                  );
-                }).toList(),
+                      const SizedBox(height: 24),
+                      Text(
+                        'Datas disponíveis',
+                        style: theme.textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: const Color(0xFFE0E0E0)),
+                          borderRadius: BorderRadius.circular(12),
+                          color: Colors.white,
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 12,
+                          horizontal: 8,
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                IconButton(
+                                  icon: const Icon(Icons.chevron_left),
+                                  onPressed: _goToPreviousMonth,
+                                ),
+                                Text(
+                                  '${monthName[0].toUpperCase()}${monthName.substring(1)} ${_displayedYear}',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16,
+                                    color: black,
+                                    fontFamily: 'Inter',
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: const Icon(Icons.chevron_right),
+                                  onPressed: _goToNextMonth,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 4),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: const [
+                                Text(
+                                  'Dom',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12,
+                                    color: black,
+                                  ),
+                                ),
+                                Text(
+                                  'Seg',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12,
+                                    color: black,
+                                  ),
+                                ),
+                                Text(
+                                  'Ter',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12,
+                                    color: black,
+                                  ),
+                                ),
+                                Text(
+                                  'Qua',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12,
+                                    color: black,
+                                  ),
+                                ),
+                                Text(
+                                  'Qui',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12,
+                                    color: black,
+                                  ),
+                                ),
+                                Text(
+                                  'Sex',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12,
+                                    color: black,
+                                  ),
+                                ),
+                                Text(
+                                  'Sab',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12,
+                                    color: black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 4),
+                            GridView.count(
+                              crossAxisCount: 7,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              children: _buildCalendarDays(context),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      Text(
+                        'Horários disponíveis',
+                        style: theme.textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Wrap(
+                        spacing: 16,
+                        runSpacing: 16,
+                        children: _horarios.map((horario) {
+                          final isSelected = _selectedTime == horario;
+                          return SizedBox(
+                            width:
+                                (MediaQuery.of(context).size.width - 48 - 48) /
+                                4,
+                            height: 56,
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _selectedTime = horario;
+                                });
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: isSelected ? green : Colors.white,
+                                  border: Border.all(color: green, width: 1.5),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    horario,
+                                    style: TextStyle(
+                                      color: isSelected ? Colors.white : green,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                      fontFamily: 'Inter',
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                      const SizedBox(height: 24),
+                    ],
+                  ),
+                ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
       bottomNavigationBar: Container(
         color: Colors.white,
-        padding: const EdgeInsets.fromLTRB(24, 0, 24, 48),
+        padding: const EdgeInsets.fromLTRB(24, 16, 24, 48),
         child: SizedBox(
           height: 48,
           child: ElevatedButton(
-            onPressed: _selectedTime != null ? () {} : null,
+            onPressed: _selectedTime != null
+                ? () {
+                    Navigator.of(context).pushNamed('/payment');
+                  }
+                : null,
             style: ElevatedButton.styleFrom(
               backgroundColor: _selectedTime != null ? green : gray,
               foregroundColor: Colors.white,
@@ -410,7 +439,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 borderRadius: BorderRadius.circular(24),
               ),
             ),
-            child: const Text('Confirmar'),
+            child: const Text('Continuar'),
           ),
         ),
       ),

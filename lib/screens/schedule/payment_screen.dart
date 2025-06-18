@@ -318,7 +318,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
           child: ElevatedButton(
             onPressed: (_selectedPayment != null || _selectedAddress != null)
                 ? () {
-                    // Finalizar agendamento
+                    Navigator.of(
+                      context,
+                    ).pushReplacementNamed('/payment_confirmation');
                   }
                 : null,
             style: ElevatedButton.styleFrom(

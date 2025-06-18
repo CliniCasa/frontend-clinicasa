@@ -1,7 +1,23 @@
 import 'package:flutter/material.dart';
 
-class ProfessionalScreen extends StatelessWidget {
+class ProfessionalScreen extends StatefulWidget {
   const ProfessionalScreen({super.key});
+
+  @override
+  State<ProfessionalScreen> createState() => _ProfessionalScreenState();
+}
+
+class _ProfessionalScreenState extends State<ProfessionalScreen> {
+  final List<String> servicos = [
+    'Quiropraxia',
+    'Massagem',
+    'Fisioterapia',
+    'Acupuntura',
+    'Terapia Ocupacional',
+  ];
+  String selectedServico;
+
+  _ProfessionalScreenState() : selectedServico = 'Quiropraxia';
 
   @override
   Widget build(BuildContext context) {
@@ -9,15 +25,6 @@ class ProfessionalScreen extends StatelessWidget {
     final green = theme.colorScheme.primary;
     const black = Color(0xFF35393C);
     const gray = Color(0xFF878787);
-
-    final List<String> servicos = [
-      'Quiropraxia',
-      'Massagem',
-      'Fisioterapia',
-      'Acupuntura',
-      'Terapia Ocupacional',
-    ];
-    String selectedServico = servicos[0];
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -141,7 +148,13 @@ class ProfessionalScreen extends StatelessWidget {
                               ),
                             )
                             .toList(),
-                        onChanged: (value) {},
+                        onChanged: (value) {
+                          if (value != null) {
+                            setState(() {
+                              selectedServico = value;
+                            });
+                          }
+                        },
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
                             horizontal: 16,
@@ -260,7 +273,9 @@ class ProfessionalScreen extends StatelessWidget {
           height: 48,
           child: ElevatedButton(
             onPressed: () {
-              Navigator.of(context).pushNamed('/schedule');
+              Navigator.of(
+                context,
+              ).pushNamed('/schedule', arguments: selectedServico);
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: green,

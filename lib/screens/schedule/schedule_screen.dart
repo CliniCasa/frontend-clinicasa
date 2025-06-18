@@ -30,6 +30,29 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     'Dezembro',
   ];
 
+  String? selectedServico;
+  final List<String> servicos = [
+    'Quiropraxia',
+    'Massagem',
+    'Fisioterapia',
+    'Acupuntura',
+    'Terapia Ocupacional',
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    // Recupera o serviço selecionado da tela anterior
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final args = ModalRoute.of(context)?.settings.arguments;
+      if (args != null && args is String) {
+        setState(() {
+          selectedServico = args;
+        });
+      }
+    });
+  }
+
   void _goToPreviousMonth() {
     setState(() {
       if (_displayedMonth == 1) {
@@ -152,6 +175,60 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                     ),
                   ),
                 ],
+              ),
+              const SizedBox(height: 24),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Serviços',
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: black,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                    fontFamily: 'Inter',
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+              DropdownButtonFormField<String>(
+                value: selectedServico,
+                items: servicos
+                    .map(
+                      (servico) => DropdownMenuItem(
+                        value: servico,
+                        child: Text(
+                          servico,
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            color: black,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 15,
+                            fontFamily: 'Inter',
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
+                onChanged: (value) {
+                  setState(() {
+                    selectedServico = value;
+                  });
+                },
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 16,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(color: gray.withOpacity(0.5)),
+                  ),
+                ),
+                icon: const Icon(
+                  Icons.keyboard_arrow_down_rounded,
+                  color: Color(0xFF878787),
+                ),
+                dropdownColor: Colors.white,
+                isExpanded: true,
               ),
               const SizedBox(height: 24),
               Text(

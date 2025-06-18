@@ -54,3 +54,32 @@ flutter run
 - Notificações em tempo real
 
 ## 📸 Prints do front-end
+
+**Splash Screen:**
+
+![image](https://github.com/user-attachments/assets/a07aef76-706e-48da-b0f9-ac07fccef022)
+
+**Login:**
+
+![image](https://github.com/user-attachments/assets/119302b3-5381-49af-a2f5-7c2ec3a092be)
+
+**Cadastro:**
+
+![image](https://github.com/user-attachments/assets/325134d7-cf12-4bde-a827-779a064689cc)
+
+**Homepage:**
+
+![image](https://github.com/user-attachments/assets/215adb38-102c-465a-bb32-0c57df44d6f8)
+
+**Perfil de profissional:**
+
+![image](https://github.com/user-attachments/assets/9000c667-c806-4644-8f98-d7249362a61c)
+
+**Agendamento:**
+
+![image](https://github.com/user-attachments/assets/3398a1ea-e908-4ea8-bc5e-e1dcbb85876d)
+
+**Pagamento:**
+
+![image](https://github.com/user-attachments/assets/4811902b-e493-472c-a895-a7b817d50db1)
+

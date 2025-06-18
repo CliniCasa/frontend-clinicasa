@@ -13,13 +13,23 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
     with TickerProviderStateMixin {
   bool _showCheck = false;
   late AnimationController _checkController;
+  late AnimationController _fadeController;
+  late Animation<double> _fadeAnimation;
 
   @override
   void initState() {
     super.initState();
     _checkController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 700),
+      duration: const Duration(milliseconds: 350),
+    );
+    _fadeController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 250),
+    );
+    _fadeAnimation = CurvedAnimation(
+      parent: _fadeController,
+      curve: Curves.easeOut,
     );
     Future.delayed(const Duration(seconds: 2), () {
       setState(() {
@@ -27,7 +37,8 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
       });
       _checkController.forward();
     });
-    Future.delayed(const Duration(seconds: 4), () {
+    Future.delayed(const Duration(seconds: 4), () async {
+      await _fadeController.forward();
       if (mounted) {
         Navigator.of(
           context,
@@ -39,12 +50,12 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
   @override
   void dispose() {
     _checkController.dispose();
+    _fadeController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final green = Theme.of(context).colorScheme.primary;
     return Scaffold(
       backgroundColor: const Color(0xFFF2F2F2),
       body: SafeArea(
@@ -67,15 +78,18 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
             ),
             const SizedBox(height: 8),
             Expanded(
-              child: Center(
+              child: FadeTransition(
+                opacity: ReverseAnimation(_fadeAnimation),
                 child: Container(
-                  width: 360,
+                  width: double.infinity,
                   height: double.infinity,
-                  margin: const EdgeInsets.symmetric(
-                    vertical: 0,
-                    horizontal: 0,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [Color(0xFF197E37), Color(0xFF105023)],
+                    ),
                   ),
-                  decoration: BoxDecoration(color: green),
                   child: Center(
                     child: _showCheck
                         ? Column(

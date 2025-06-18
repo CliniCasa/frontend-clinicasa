@@ -4,6 +4,7 @@ import 'screens/login-configure/select_account_type_screen.dart';
 import 'screens/login-configure/personal_data_screen.dart';
 import 'screens/home/home_screen.dart';
 import 'screens/schedule/professional_screen.dart';
+import 'screens/schedule/schedule_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
         '/personal_data': (_) => const PersonalDataScreen(),
         '/home': (_) => const HomeScreen(),
         '/professional': (_) => const ProfessionalScreen(),
+        '/schedule': (_) => const ScheduleScreen(),
       },
     );
   }

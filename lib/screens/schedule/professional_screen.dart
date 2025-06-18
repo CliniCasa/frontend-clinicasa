@@ -259,7 +259,9 @@ class ProfessionalScreen extends StatelessWidget {
         child: SizedBox(
           height: 48,
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed('/schedule');
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: green,
               foregroundColor: Colors.white,

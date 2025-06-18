@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'screens/login/login_screen.dart';
-import 'screens/login-configure/select_account_type_screen.dart';
-import 'screens/login-configure/personal_data_screen.dart';
+import 'screens/register/select_account_type_screen.dart';
+import 'screens/register/personal_data_screen.dart';
 import 'screens/home/home_screen.dart';
 import 'screens/schedule/professional_screen.dart';
 import 'screens/schedule/schedule_screen.dart';
 import 'screens/schedule/payment_screen.dart';
 import 'screens/schedule/payment_confirmation_screen.dart';
+import 'screens/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Inter',
         useMaterial3: true,
       ),
-      home: const LoginScreen(),
+      home: const SplashScreen(),
       debugShowCheckedModeBanner: false,
       routes: {
         '/select_account_type': (_) => const SelectAccountTypeScreen(),
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
         '/schedule': (_) => const ScheduleScreen(),
         '/payment': (_) => const PaymentScreen(),
         '/payment_confirmation': (_) => const PaymentConfirmationScreen(),
+        '/login': (_) => const LoginScreen(),
       },
     );
   }

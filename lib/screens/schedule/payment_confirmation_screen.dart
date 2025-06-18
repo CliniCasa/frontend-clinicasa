@@ -21,7 +21,7 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
     super.initState();
     _checkController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 350),
+      duration: const Duration(milliseconds: 200),
     );
     _fadeController = AnimationController(
       vsync: this,
@@ -92,58 +92,24 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
                   ),
                   child: Center(
                     child: _showCheck
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              AnimatedBuilder(
-                                animation: _checkController,
-                                builder: (context, child) {
-                                  return CustomPaint(
-                                    size: const Size(100, 100),
-                                    painter: _CheckPainter(
-                                      _checkController.value,
-                                    ),
-                                  );
-                                },
-                              ),
-                              const SizedBox(height: 32),
-                              const Text(
-                                'Agendamento\nconfirmado',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 24,
-                                  fontFamily: 'Inter',
-                                ),
-                              ),
-                            ],
+                        ? AnimatedBuilder(
+                            animation: _checkController,
+                            builder: (context, child) {
+                              return CustomPaint(
+                                size: const Size(220, 220),
+                                painter: _CheckPainter(_checkController.value),
+                              );
+                            },
                           )
-                        : Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const SizedBox(
-                                width: 100,
-                                height: 100,
-                                child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                    Colors.white,
-                                  ),
-                                  strokeWidth: 8,
-                                ),
+                        : const SizedBox(
+                            width: 140,
+                            height: 140,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Colors.white,
                               ),
-                              const SizedBox(height: 32),
-                              const Text(
-                                'Carregando\nagendamento',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 24,
-                                  fontFamily: 'Inter',
-                                ),
-                              ),
-                            ],
+                              strokeWidth: 10,
+                            ),
                           ),
                   ),
                 ),

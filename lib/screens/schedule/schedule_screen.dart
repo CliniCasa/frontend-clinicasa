@@ -276,7 +276,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                                   onPressed: _goToPreviousMonth,
                                 ),
                                 Text(
-                                  '${monthName[0].toUpperCase()}${monthName.substring(1)} ${_displayedYear}',
+                                  '${monthName[0].toUpperCase()}${monthName.substring(1)} $_displayedYear',
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 16,

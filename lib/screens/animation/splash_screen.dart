@@ -61,7 +61,7 @@ class _SplashScreenState extends State<SplashScreen>
       _textController.forward();
     });
     // 3.25s: inicia fade out e navega
-    Future.delayed(const Duration(milliseconds: 2500), () async {
+    Future.delayed(const Duration(milliseconds: 3000), () async {
       await _fadeOutController.forward();
       if (mounted) {
         Navigator.of(context).pushReplacementNamed('/login');

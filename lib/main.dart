@@ -6,8 +6,8 @@ import 'screens/home/home_screen.dart';
 import 'screens/schedule/professional_screen.dart';
 import 'screens/schedule/schedule_screen.dart';
 import 'screens/schedule/payment_screen.dart';
-import 'screens/schedule/payment_confirmation_screen.dart';
-import 'screens/splash_screen.dart';
+import 'screens/animation/confirmation_screen.dart';
+import 'screens/animation/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
         '/professional': (_) => const ProfessionalScreen(),
         '/schedule': (_) => const ScheduleScreen(),
         '/payment': (_) => const PaymentScreen(),
-        '/payment_confirmation': (_) => const PaymentConfirmationScreen(),
+        '/confirmation': (_) => const PaymentConfirmationScreen(),
         '/login': (_) => const LoginScreen(),
       },
     );

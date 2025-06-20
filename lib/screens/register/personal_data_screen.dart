@@ -230,10 +230,10 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                               value: 'prefiro_nao_dizer',
                               child: Text('Prefiro não dizer'),
                             ),
-                            DropdownMenuItem(
-                              value: 'outro',
-                              child: Text('Outro'),
-                            ),
+                            // DropdownMenuItem(
+                            //   value: 'outro',
+                            //   child: Text('Outro'),
+                            // ),
                           ],
                           validator: (value) {
                             if (value == null || value.isEmpty) {

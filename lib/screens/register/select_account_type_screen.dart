@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import '../login/logo_clinicasa.dart';
+import '../../widgets/logo_clinicasa.dart';
 
 class SelectAccountTypeScreen extends StatelessWidget {
   const SelectAccountTypeScreen({super.key});
@@ -46,7 +45,11 @@ class SelectAccountTypeScreen extends StatelessWidget {
                           child: Container(
                             margin: const EdgeInsets.only(right: 12),
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(
+                                  context,
+                                ).pushNamed('/personal_data');
+                              },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: green,
                                 foregroundColor: Colors.white,

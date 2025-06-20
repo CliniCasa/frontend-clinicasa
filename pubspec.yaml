@@ -91,6 +91,7 @@ flutter:
 
   assets:
     - assets/images/logo_clinicasa.svg
+    - assets/images/logo_clinicasa_white.svg
 
   fonts:
     - family: Inter

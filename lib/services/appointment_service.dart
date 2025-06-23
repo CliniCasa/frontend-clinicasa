@@ -33,17 +33,24 @@ class AppointmentService {
     required String workerId,
     required String userId,
     required DateTime date,
+    required String service,
   }) async {
     try {
       final data = {
         'workerId': workerId,
-        'userId': userId,
+        'userId': int.parse(userId),
         'date': date.toIso8601String(),
+        'service': service,
       };
 
+      print('Dados do agendamento: $data'); // Debug
+
       final response = await ApiService.post('/appointments', data);
+      print('Resposta do servidor: $response'); // Debug
+
       return Appointment.fromJson(response);
     } catch (e) {
+      print('Erro ao criar agendamento: $e'); // Debug
       throw Exception('Erro ao criar agendamento: $e');
     }
   }

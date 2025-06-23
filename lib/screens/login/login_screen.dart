@@ -15,17 +15,22 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _obscurePassword = true;
   String? _errorMessage;
 
-  void _login() {
+  Future<void> _login() async {
     setState(() {
       _errorMessage = null;
     });
     if (_formKey.currentState!.validate()) {
-      if (_emailController.text == 'joao_pedro@gmail.com' &&
-          _passwordController.text == '123456') {
+      // Verificação local das credenciais
+      final email = _emailController.text.trim();
+      final password = _passwordController.text;
+
+      if (email == 'bruno@gmail.com' && password == '123456') {
+        // Login bem-sucedido
         Navigator.of(context).pushReplacementNamed('/home');
       } else {
+        // Credenciais inválidas
         setState(() {
-          _errorMessage = 'E-mail ou senha inválidos';
+          _errorMessage = 'E-mail ou senha incorretos';
         });
       }
     }

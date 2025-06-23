@@ -127,9 +127,19 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
 
   void _submit() {
     if (_formKey.currentState!.validate()) {
-      Navigator.of(
-        context,
-      ).push(MaterialPageRoute(builder: (context) => const AddressScreen()));
+      final userData = {
+        'name': _nameController.text,
+        'gender': _selectedGender ?? '',
+        'phone': _phoneController.text,
+        'email': _emailController.text,
+        'password': _passwordController.text,
+        'accountType': 'patient', // ajuste se necessário
+      };
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => AddressScreen(userData: userData),
+        ),
+      );
     }
   }
 
@@ -215,19 +225,19 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                           hint: const Text('Selecione'),
                           items: const [
                             DropdownMenuItem(
-                              value: 'masculino',
+                              value: 'Masculino',
                               child: Text('Masculino'),
                             ),
                             DropdownMenuItem(
-                              value: 'feminino',
+                              value: 'Feminino',
                               child: Text('Feminino'),
                             ),
                             DropdownMenuItem(
-                              value: 'nao_binario',
+                              value: 'Não binário',
                               child: Text('Não binário'),
                             ),
                             DropdownMenuItem(
-                              value: 'prefiro_nao_dizer',
+                              value: 'Prefiro não dizer',
                               child: Text('Prefiro não dizer'),
                             ),
                             // DropdownMenuItem(

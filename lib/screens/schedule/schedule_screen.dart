@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../models/worker.dart';
+import '../../models/appointment.dart';
 import '../../services/appointment_service.dart';
 
 class ScheduleScreen extends StatefulWidget {
@@ -18,6 +19,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   List<String> _horarios = [];
   bool isLoadingHorarios = false;
   String? errorHorarios;
+  bool isLoadingAppointment = false;
 
   final List<String> _meses = [
     'Janeiro',
@@ -112,6 +114,73 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         errorHorarios = 'Erro ao buscar horários: $e';
         isLoadingHorarios = false;
       });
+    }
+  }
+
+  Future<void> _createAppointment() async {
+    if (worker == null || _selectedTime == null || selectedServico == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Por favor, selecione um serviço e um horário'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    setState(() {
+      isLoadingAppointment = true;
+    });
+
+    try {
+      // Parse o horário selecionado para criar a data completa
+      final timeParts = _selectedTime!.split(':');
+      final hour = int.parse(timeParts[0]);
+      final minute = int.parse(timeParts[1]);
+
+      final appointmentDate = DateTime(
+        _selectedDate.year,
+        _selectedDate.month,
+        _selectedDate.day,
+        hour,
+        minute,
+      );
+
+      // Criar o agendamento
+      final appointment = await AppointmentService.createAppointment(
+        workerId: worker!.id,
+        userId: '2', // Sempre usar userId 2 como solicitado
+        date: appointmentDate,
+        service: _mapServiceToBackend(
+          selectedServico!,
+        ), // Mapeado para o enum do backend
+      );
+
+      setState(() {
+        isLoadingAppointment = false;
+      });
+
+      // Mostrar mensagem de sucesso
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Agendamento criado com sucesso!'),
+          backgroundColor: Colors.green,
+        ),
+      );
+
+      // Navegar para a tela de pagamento
+      Navigator.of(context).pushNamed('/payment');
+    } catch (e) {
+      setState(() {
+        isLoadingAppointment = false;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Erro ao criar agendamento: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 
@@ -465,13 +534,13 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         child: SizedBox(
           height: 48,
           child: ElevatedButton(
-            onPressed: _selectedTime != null
-                ? () {
-                    Navigator.of(context).pushNamed('/payment');
-                  }
+            onPressed: _selectedTime != null && !isLoadingAppointment
+                ? _createAppointment
                 : null,
             style: ElevatedButton.styleFrom(
-              backgroundColor: _selectedTime != null ? green : gray,
+              backgroundColor: _selectedTime != null && !isLoadingAppointment
+                  ? green
+                  : gray,
               foregroundColor: Colors.white,
               textStyle: const TextStyle(
                 fontWeight: FontWeight.bold,
@@ -481,11 +550,38 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 borderRadius: BorderRadius.circular(24),
               ),
             ),
-            child: const Text('Continuar'),
+            child: isLoadingAppointment
+                ? const SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    ),
+                  )
+                : const Text('Continuar'),
           ),
         ),
       ),
     );
+  }
+
+  // Mapeamento dos serviços do frontend para os valores do enum ServiceType do backend
+  String _mapServiceToBackend(String frontendService) {
+    switch (frontendService) {
+      case 'Quiropraxia':
+        return 'Fisioterapia Motora';
+      case 'Massagem':
+        return 'Massagem Relaxante';
+      case 'Fisioterapia':
+        return 'Fisioterapia Motora';
+      case 'Acupuntura':
+        return 'Shiatsu';
+      case 'Terapia Ocupacional':
+        return 'Suporte Administrativo';
+      default:
+        return 'Fisioterapia Motora'; // Valor padrão
+    }
   }
 }
 

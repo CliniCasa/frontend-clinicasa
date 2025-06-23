@@ -51,6 +51,11 @@ class MyApp extends StatelessWidget {
         '/schedule': (_) => const ScheduleScreen(),
         '/payment': (_) => const PaymentScreen(),
         '/confirmation': (_) => const PaymentConfirmationScreen(),
+        '/register_confirmation': (_) => const ConfirmationScreen(
+          title: 'Cadastro',
+          subtitle: 'Cadastrando usuário...',
+          nextRoute: '/home',
+        ),
         '/login': (_) => const LoginScreen(),
       },
     );

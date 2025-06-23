@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-class PaymentConfirmationScreen extends StatefulWidget {
-  const PaymentConfirmationScreen({super.key});
+class ConfirmationScreen extends StatefulWidget {
+  final String title;
+  final String subtitle;
+  final String nextRoute;
+
+  const ConfirmationScreen({
+    super.key,
+    this.title = 'Pagamento',
+    this.subtitle = 'Processando...',
+    this.nextRoute = '/home',
+  });
 
   @override
-  State<PaymentConfirmationScreen> createState() =>
-      _PaymentConfirmationScreenState();
+  State<ConfirmationScreen> createState() => _ConfirmationScreenState();
 }
 
-class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
+class _ConfirmationScreenState extends State<ConfirmationScreen>
     with TickerProviderStateMixin {
   bool _showCheck = false;
   late AnimationController _checkController;
@@ -42,7 +50,7 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
       if (mounted) {
         Navigator.of(
           context,
-        ).pushNamedAndRemoveUntil('/home', (route) => false);
+        ).pushNamedAndRemoveUntil(widget.nextRoute, (route) => false);
       }
     });
   }
@@ -66,7 +74,7 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  'Pagamento',
+                  widget.title,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: const Color(0xFFB0B0B0),
                     fontWeight: FontWeight.w500,
@@ -118,6 +126,20 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen>
           ],
         ),
       ),
+    );
+  }
+}
+
+// Mantém a classe PaymentConfirmationScreen para compatibilidade
+class PaymentConfirmationScreen extends StatelessWidget {
+  const PaymentConfirmationScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const ConfirmationScreen(
+      title: 'Pagamento',
+      subtitle: 'Processando pagamento...',
+      nextRoute: '/home',
     );
   }
 }

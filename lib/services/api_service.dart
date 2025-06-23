@@ -44,9 +44,24 @@ class ApiService {
       if (response.statusCode == 201 || response.statusCode == 200) {
         return json.decode(response.body);
       } else {
-        throw Exception('Erro na requisição: ${response.statusCode}');
+        // Tenta decodificar a mensagem de erro do backend
+        try {
+          final errorData = json.decode(response.body);
+          if (errorData is Map<String, dynamic> &&
+              errorData.containsKey('message')) {
+            throw Exception('${response.statusCode}: ${errorData['message']}');
+          }
+        } catch (_) {
+          // Se não conseguir decodificar, usa a mensagem padrão
+        }
+        throw Exception(
+          'Erro na requisição: ${response.statusCode} - ${response.body}',
+        );
       }
     } catch (e) {
+      if (e is Exception) {
+        rethrow;
+      }
       throw Exception('Erro de conexão: $e');
     }
   }

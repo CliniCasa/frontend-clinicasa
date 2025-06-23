@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/logo_clinicasa.dart';
+import '../../services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -15,17 +16,21 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _obscurePassword = true;
   String? _errorMessage;
 
-  void _login() {
+  Future<void> _login() async {
     setState(() {
       _errorMessage = null;
     });
     if (_formKey.currentState!.validate()) {
-      if (_emailController.text == 'joao_pedro@gmail.com' &&
-          _passwordController.text == '123456') {
+      try {
+        final result = await AuthService.login(
+          _emailController.text.trim(),
+          _passwordController.text,
+        );
+        // Aqui você pode salvar o token se quiser
         Navigator.of(context).pushReplacementNamed('/home');
-      } else {
+      } catch (e) {
         setState(() {
-          _errorMessage = 'E-mail ou senha inválidos';
+          _errorMessage = e.toString().replaceFirst('Exception: ', '');
         });
       }
     }

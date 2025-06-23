@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../widgets/logo_clinicasa.dart';
-import '../../services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -21,16 +20,17 @@ class _LoginScreenState extends State<LoginScreen> {
       _errorMessage = null;
     });
     if (_formKey.currentState!.validate()) {
-      try {
-        final result = await AuthService.login(
-          _emailController.text.trim(),
-          _passwordController.text,
-        );
-        // Aqui você pode salvar o token se quiser
+      // Verificação local das credenciais
+      final email = _emailController.text.trim();
+      final password = _passwordController.text;
+
+      if (email == 'bruno@gmail.com' && password == '123456') {
+        // Login bem-sucedido
         Navigator.of(context).pushReplacementNamed('/home');
-      } catch (e) {
+      } else {
+        // Credenciais inválidas
         setState(() {
-          _errorMessage = e.toString().replaceFirst('Exception: ', '');
+          _errorMessage = 'E-mail ou senha incorretos';
         });
       }
     }

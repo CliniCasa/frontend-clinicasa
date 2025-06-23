@@ -33,14 +33,14 @@ class AppointmentService {
     required String workerId,
     required String userId,
     required DateTime date,
+    required String service,
   }) async {
     try {
       final data = {
         'workerId': workerId,
-        'userId': int.parse(
-          userId,
-        ), // Converter para int conforme esperado pelo backend
+        'userId': int.parse(userId),
         'date': date.toIso8601String(),
+        'service': service,
       };
 
       print('Dados do agendamento: $data'); // Debug

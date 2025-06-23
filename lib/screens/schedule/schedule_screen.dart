@@ -118,10 +118,10 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   }
 
   Future<void> _createAppointment() async {
-    if (worker == null || _selectedTime == null) {
+    if (worker == null || _selectedTime == null || selectedServico == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Por favor, selecione um horário'),
+          content: Text('Por favor, selecione um serviço e um horário'),
           backgroundColor: Colors.red,
         ),
       );
@@ -146,19 +146,15 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         minute,
       );
 
-      print('Worker ID: ${worker!.id}'); // Debug
-      print('Selected Date: $_selectedDate'); // Debug
-      print('Selected Time: $_selectedTime'); // Debug
-      print('Appointment Date: $appointmentDate'); // Debug
-
       // Criar o agendamento
       final appointment = await AppointmentService.createAppointment(
         workerId: worker!.id,
         userId: '2', // Sempre usar userId 2 como solicitado
         date: appointmentDate,
+        service: _mapServiceToBackend(
+          selectedServico!,
+        ), // Mapeado para o enum do backend
       );
-
-      print('Agendamento criado: ${appointment.id}'); // Debug
 
       setState(() {
         isLoadingAppointment = false;
@@ -178,8 +174,6 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       setState(() {
         isLoadingAppointment = false;
       });
-
-      print('Erro no agendamento: $e'); // Debug
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -570,6 +564,24 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         ),
       ),
     );
+  }
+
+  // Mapeamento dos serviços do frontend para os valores do enum ServiceType do backend
+  String _mapServiceToBackend(String frontendService) {
+    switch (frontendService) {
+      case 'Quiropraxia':
+        return 'Fisioterapia Motora';
+      case 'Massagem':
+        return 'Massagem Relaxante';
+      case 'Fisioterapia':
+        return 'Fisioterapia Motora';
+      case 'Acupuntura':
+        return 'Shiatsu';
+      case 'Terapia Ocupacional':
+        return 'Suporte Administrativo';
+      default:
+        return 'Fisioterapia Motora'; // Valor padrão
+    }
   }
 }
 

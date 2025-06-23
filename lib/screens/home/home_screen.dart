@@ -257,7 +257,21 @@ class _HomeScreenState extends State<HomeScreen> {
       itemBuilder: (context, index) {
         final worker = workers[index];
         return GestureDetector(
-          onTap: () => Navigator.of(context).pushNamed('/professional'),
+          onTap: () async {
+            try {
+              final fetchedWorker = await WorkerService.getWorkerById(
+                worker.id,
+              );
+              if (!mounted) return;
+              Navigator.of(
+                context,
+              ).pushNamed('/professional', arguments: fetchedWorker);
+            } catch (e) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Erro ao buscar profissional: $e')),
+              );
+            }
+          },
           child: _BestNearYouTile(
             name: worker.name,
             role: worker.role,

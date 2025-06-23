@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../models/worker.dart';
 
 class ProfessionalScreen extends StatefulWidget {
   const ProfessionalScreen({super.key});
@@ -25,6 +26,10 @@ class _ProfessionalScreenState extends State<ProfessionalScreen> {
     final green = theme.colorScheme.primary;
     const black = Color(0xFF35393C);
     const gray = Color(0xFF878787);
+
+    // Recebe o Worker passado como argumento
+    final Worker? worker =
+        ModalRoute.of(context)?.settings.arguments as Worker?;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -62,17 +67,20 @@ class _ProfessionalScreenState extends State<ProfessionalScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      // Foto do profissional
-                      CircleAvatar(
+                      // Foto do profissional (nula)
+                      const CircleAvatar(
                         radius: 48,
-                        backgroundImage: NetworkImage(
-                          'https://randomuser.me/api/portraits/women/28.jpg',
+                        backgroundColor: Color(0xFFE0E0E0),
+                        child: Icon(
+                          Icons.person,
+                          size: 48,
+                          color: Color(0xFF878787),
                         ),
                       ),
                       const SizedBox(height: 16),
-                      // Nome
+                      // Nome dinâmico
                       Text(
-                        'Ana Maria',
+                        worker?.name ?? 'Profissional',
                         style: theme.textTheme.headlineSmall?.copyWith(
                           color: black,
                           fontWeight: FontWeight.w600,

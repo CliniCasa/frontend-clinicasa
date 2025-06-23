@@ -9,20 +9,32 @@ class WorkerService {
     String? search,
   }) async {
     try {
+      print('WorkerService.getWorkers - Iniciando...'); // Debug
       String endpoint = '/workers?page=$page&limit=$limit';
       if (search != null && search.isNotEmpty) {
         endpoint += '&search=$search';
       }
 
+      print('WorkerService.getWorkers - Endpoint: $endpoint'); // Debug
       final response = await ApiService.get(endpoint);
+      print('WorkerService.getWorkers - Response: $response'); // Debug
 
       if (response.containsKey('data')) {
         final List<dynamic> workersData = response['data'];
-        return workersData.map((json) => Worker.fromJson(json)).toList();
+        print('WorkerService.getWorkers - Workers data: $workersData'); // Debug
+        final workers = workersData
+            .map((json) => Worker.fromJson(json))
+            .toList();
+        print(
+          'WorkerService.getWorkers - Workers parsed: ${workers.length}',
+        ); // Debug
+        return workers;
       } else {
+        print('WorkerService.getWorkers - No data key in response'); // Debug
         return [];
       }
     } catch (e) {
+      print('WorkerService.getWorkers - Error: $e'); // Debug
       throw Exception('Erro ao buscar funcionários: $e');
     }
   }

@@ -21,14 +21,16 @@ class Worker {
 }
 
 enum WorkerRole {
-  @JsonValue('Enfermeira')
-  enfermeira,
-  @JsonValue('Massagista')
+  @JsonValue('CUIDADOR')
+  cuidador,
+  @JsonValue('MASSAGISTA')
   massagista,
-  @JsonValue('Fisioterapeuta')
+  @JsonValue('FISIOTERAPEUTA')
   fisioterapeuta,
-  @JsonValue('Psicólogo')
+  @JsonValue('PSICOLOGO')
   psicologo,
-  @JsonValue('Outros')
+  @JsonValue('MEDICO')
+  medico,
+  @JsonValue('OUTROS')
   outros,
 }

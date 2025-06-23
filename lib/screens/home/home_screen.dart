@@ -22,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _loadWorkers() async {
     try {
+      print('Iniciando carregamento de workers...'); // Debug
       setState(() {
         isLoading = true;
         errorMessage = null;
@@ -33,11 +34,17 @@ class _HomeScreenState extends State<HomeScreen> {
         search: '', // sem busca por nome
       );
 
+      print('Workers carregados: ${workersList.length}'); // Debug
+      print(
+        'Workers: ${workersList.map((w) => '${w.name} (${w.id})').join(', ')}',
+      ); // Debug
+
       setState(() {
         workers = workersList;
         isLoading = false;
       });
     } catch (e) {
+      print('Erro ao carregar workers: $e'); // Debug
       setState(() {
         errorMessage = 'Erro ao carregar profissionais: $e';
         isLoading = false;

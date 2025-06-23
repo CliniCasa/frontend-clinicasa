@@ -37,13 +37,20 @@ class AppointmentService {
     try {
       final data = {
         'workerId': workerId,
-        'userId': userId,
+        'userId': int.parse(
+          userId,
+        ), // Converter para int conforme esperado pelo backend
         'date': date.toIso8601String(),
       };
 
+      print('Dados do agendamento: $data'); // Debug
+
       final response = await ApiService.post('/appointments', data);
+      print('Resposta do servidor: $response'); // Debug
+
       return Appointment.fromJson(response);
     } catch (e) {
+      print('Erro ao criar agendamento: $e'); // Debug
       throw Exception('Erro ao criar agendamento: $e');
     }
   }

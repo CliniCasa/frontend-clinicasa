@@ -1,7 +1,49 @@
 import 'package:flutter/material.dart';
+import '../../models/worker.dart';
+import '../../services/worker_service.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  List<Worker> workers = [];
+  bool isLoading = true;
+  String? errorMessage;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadWorkers();
+  }
+
+  Future<void> _loadWorkers() async {
+    try {
+      setState(() {
+        isLoading = true;
+        errorMessage = null;
+      });
+
+      final workersList = await WorkerService.getWorkers(
+        page: 1,
+        limit: 7,
+        search: '', // sem busca por nome
+      );
+
+      setState(() {
+        workers = workersList;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        errorMessage = 'Erro ao carregar profissionais: $e';
+        isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,114 +169,7 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            // Seus últimos serviços
-            const SizedBox(height: 32),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Seus últimos serviços',
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      color: black,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                      fontFamily: 'Inter',
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        'Ver todos',
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: green,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12,
-                          fontFamily: 'Inter',
-                        ),
-                      ),
-                      const SizedBox(width: 1),
-                      Icon(Icons.chevron_right_rounded, color: green, size: 16),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 160,
-              child: Center(
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  children: [
-                    GestureDetector(
-                      onTap: () =>
-                          Navigator.of(context).pushNamed('/professional'),
-                      child: _ServiceAvatar(
-                        name: 'Miguel Aba',
-                        role: 'Cuidador',
-                        image: 'https://randomuser.me/api/portraits/men/57.jpg',
-                        color: green,
-                        black: black,
-                        gray: gray,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () =>
-                          Navigator.of(context).pushNamed('/professional'),
-                      child: _ServiceAvatar(
-                        name: 'Julia Lima',
-                        role: 'Psicólogo',
-                        image:
-                            'https://randomuser.me/api/portraits/women/30.jpg',
-                        color: green,
-                        black: black,
-                        gray: gray,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () =>
-                          Navigator.of(context).pushNamed('/professional'),
-                      child: _ServiceAvatar(
-                        name: 'João Silva',
-                        role: 'Fisioterapia',
-                        image: 'https://randomuser.me/api/portraits/men/93.jpg',
-                        color: green,
-                        black: black,
-                        gray: gray,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () =>
-                          Navigator.of(context).pushNamed('/professional'),
-                      child: _ServiceAvatar(
-                        name: 'Ana Maria',
-                        role: 'Fisioterapia',
-                        image:
-                            'https://randomuser.me/api/portraits/women/28.jpg',
-                        color: green,
-                        black: black,
-                        gray: gray,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () =>
-                          Navigator.of(context).pushNamed('/professional'),
-                      child: _ServiceAvatar(
-                        name: 'Miguel Aba',
-                        role: 'Cuidador',
-                        image: 'https://randomuser.me/api/portraits/men/57.jpg',
-                        color: green,
-                        black: black,
-                        gray: gray,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            // Os melhores perto de você
+            // Agende outros serviços
             const SizedBox(height: 0),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
@@ -242,7 +177,7 @@ class HomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Os melhores próximos de você!',
+                    'Agende outros serviços!',
                     style: theme.textTheme.titleMedium?.copyWith(
                       color: black,
                       fontWeight: FontWeight.w600,
@@ -268,65 +203,7 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Expanded(
-              child: ListView(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                children: [
-                  GestureDetector(
-                    onTap: () =>
-                        Navigator.of(context).pushNamed('/professional'),
-                    child: _BestNearYouTile(
-                      name: 'Ana Maria',
-                      role: 'Fisioterapia',
-                      rating: 5.0,
-                      image: 'https://randomuser.me/api/portraits/women/28.jpg',
-                      color: green,
-                      black: black,
-                      gray: gray,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () =>
-                        Navigator.of(context).pushNamed('/professional'),
-                    child: _BestNearYouTile(
-                      name: 'João Silva',
-                      role: 'Fisioterapia',
-                      rating: 5.0,
-                      image: 'https://randomuser.me/api/portraits/men/93.jpg',
-                      color: green,
-                      black: black,
-                      gray: gray,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () =>
-                        Navigator.of(context).pushNamed('/professional'),
-                    child: _BestNearYouTile(
-                      name: 'Miguel de Oliveira',
-                      role: 'Cuidador',
-                      rating: 5.0,
-                      image: 'https://randomuser.me/api/portraits/men/48.jpg',
-                      color: green,
-                      black: black,
-                      gray: gray,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () =>
-                        Navigator.of(context).pushNamed('/professional'),
-                    child: _BestNearYouTile(
-                      name: 'Mariana Fernandes',
-                      role: 'Psicóloga',
-                      rating: 5.0,
-                      image: 'https://randomuser.me/api/portraits/women/4.jpg',
-                      color: green,
-                      black: black,
-                      gray: gray,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            Expanded(child: _buildWorkersList(theme, green, black, gray)),
             // Bottom navigation
             _BottomNavBar(
               green: green,
@@ -337,6 +214,61 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildWorkersList(
+    ThemeData theme,
+    Color green,
+    Color black,
+    Color gray,
+  ) {
+    if (isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (errorMessage != null) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              errorMessage!,
+              style: const TextStyle(color: Colors.red),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: _loadWorkers,
+              child: const Text('Tentar Novamente'),
+            ),
+          ],
+        ),
+      );
+    }
+
+    if (workers.isEmpty) {
+      return const Center(child: Text('Nenhum profissional encontrado'));
+    }
+
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      itemCount: workers.length,
+      itemBuilder: (context, index) {
+        final worker = workers[index];
+        return GestureDetector(
+          onTap: () => Navigator.of(context).pushNamed('/professional'),
+          child: _BestNearYouTile(
+            name: worker.name,
+            role: worker.role,
+            rating: 5.0, // Estrelas fixas em 5.0
+            image: null, // Sem foto por enquanto
+            color: green,
+            black: black,
+            gray: gray,
+          ),
+        );
+      },
     );
   }
 }

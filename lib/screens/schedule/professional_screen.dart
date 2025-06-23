@@ -281,9 +281,11 @@ class _ProfessionalScreenState extends State<ProfessionalScreen> {
           height: 48,
           child: ElevatedButton(
             onPressed: () {
-              Navigator.of(
-                context,
-              ).pushNamed('/schedule', arguments: selectedServico);
+              final Worker? worker =
+                  ModalRoute.of(context)?.settings.arguments as Worker?;
+              if (worker != null) {
+                Navigator.of(context).pushNamed('/schedule', arguments: worker);
+              }
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: green,

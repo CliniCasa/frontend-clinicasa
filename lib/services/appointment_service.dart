@@ -1,4 +1,6 @@
 import '../models/appointment.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'api_service.dart';
 
 class AppointmentService {
@@ -7,19 +9,22 @@ class AppointmentService {
     String workerId,
     String date,
   ) async {
-    try {
-      final response = await ApiService.get(
-        '/appointments/availability?workerId=$workerId&date=$date',
-      );
+    final url = Uri.parse(
+      '${ApiService.baseUrl}/appointments/availability?workerId=$workerId&date=$date',
+    );
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    );
 
-      if (response.containsKey('data')) {
-        final List<dynamic> slotsData = response['data'];
-        return slotsData.map((slot) => slot.toString()).toList();
-      } else {
-        return [];
-      }
-    } catch (e) {
-      throw Exception('Erro ao buscar horários disponíveis: $e');
+    if (response.statusCode == 200) {
+      final List<dynamic> data = json.decode(response.body);
+      return data.map((e) => e.toString()).toList();
+    } else {
+      throw Exception('Erro na requisição: ${response.statusCode}');
     }
   }
 

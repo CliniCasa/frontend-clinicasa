@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../models/worker.dart';
+import '../../services/appointment_service.dart';
 
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({super.key});
@@ -13,17 +15,9 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   int _displayedYear = DateTime.now().year;
   String? _selectedTime;
 
-  final List<String> _horarios = [
-    '08:00',
-    '09:00',
-    '10:00',
-    '14:00',
-    '15:00',
-    '16:00',
-    '17:00',
-    '18:00',
-    '19:00',
-  ];
+  List<String> _horarios = [];
+  bool isLoadingHorarios = false;
+  String? errorHorarios;
 
   final List<String> _meses = [
     'Janeiro',
@@ -49,16 +43,18 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     'Terapia Ocupacional',
   ];
 
+  Worker? worker;
+
   @override
   void initState() {
     super.initState();
-    // Recupera o serviço selecionado da tela anterior
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final args = ModalRoute.of(context)?.settings.arguments;
-      if (args != null && args is String) {
+      if (args != null && args is Worker) {
         setState(() {
-          selectedServico = args;
+          worker = args;
         });
+        _fetchHorarios();
       }
     });
   }
@@ -85,6 +81,40 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     });
   }
 
+  void _onDateSelected(DateTime date) {
+    setState(() {
+      _selectedDate = date;
+      _selectedTime = null;
+    });
+    _fetchHorarios();
+  }
+
+  Future<void> _fetchHorarios() async {
+    if (worker == null) return;
+    setState(() {
+      isLoadingHorarios = true;
+      errorHorarios = null;
+      _horarios = [];
+    });
+    try {
+      final dateStr =
+          "${_selectedDate.year.toString().padLeft(4, '0')}-${_selectedDate.month.toString().padLeft(2, '0')}-${_selectedDate.day.toString().padLeft(2, '0')}";
+      final horarios = await AppointmentService.getAvailableSlots(
+        worker!.id,
+        dateStr,
+      );
+      setState(() {
+        _horarios = horarios;
+        isLoadingHorarios = false;
+      });
+    } catch (e) {
+      setState(() {
+        errorHorarios = 'Erro ao buscar horários: $e';
+        isLoadingHorarios = false;
+      });
+    }
+  }
+
   List<Widget> _buildCalendarDays(BuildContext context) {
     final theme = Theme.of(context);
     final firstDayOfMonth = DateTime(_displayedYear, _displayedMonth, 1);
@@ -104,17 +134,12 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
           _selectedDate.month == date.month &&
           _selectedDate.day == date.day;
 
-      final now = DateTime.now().subtract(const Duration(days: 1));
+      final now = DateTime.now();
       final today = DateTime(now.year, now.month, now.day);
       final isToday = today == DateTime(date.year, date.month, date.day);
       days.add(
         GestureDetector(
-          onTap: () {
-            setState(() {
-              _selectedDate = date;
-              _selectedTime = null;
-            });
-          },
+          onTap: () => _onDateSelected(date),
           child: Container(
             margin: const EdgeInsets.all(2),
             decoration: BoxDecoration(
@@ -370,44 +395,61 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                         ),
                       ),
                       const SizedBox(height: 16),
-                      Wrap(
-                        spacing: 16,
-                        runSpacing: 16,
-                        children: _horarios.map((horario) {
-                          final isSelected = _selectedTime == horario;
-                          return SizedBox(
-                            width:
-                                (MediaQuery.of(context).size.width - 48 - 48) /
-                                4,
-                            height: 56,
-                            child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _selectedTime = horario;
-                                });
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: isSelected ? green : Colors.white,
-                                  border: Border.all(color: green, width: 1.5),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    horario,
-                                    style: TextStyle(
-                                      color: isSelected ? Colors.white : green,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                      fontFamily: 'Inter',
+                      if (isLoadingHorarios)
+                        const Center(child: CircularProgressIndicator()),
+                      if (errorHorarios != null)
+                        Center(
+                          child: Text(
+                            errorHorarios!,
+                            style: const TextStyle(color: Colors.red),
+                          ),
+                        ),
+                      if (!isLoadingHorarios && errorHorarios == null)
+                        Wrap(
+                          spacing: 16,
+                          runSpacing: 16,
+                          children: _horarios.map((horario) {
+                            final isSelected = _selectedTime == horario;
+                            return SizedBox(
+                              width:
+                                  (MediaQuery.of(context).size.width -
+                                      48 -
+                                      48) /
+                                  4,
+                              height: 56,
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _selectedTime = horario;
+                                  });
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: isSelected ? green : Colors.white,
+                                    border: Border.all(
+                                      color: green,
+                                      width: 1.5,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      horario,
+                                      style: TextStyle(
+                                        color: isSelected
+                                            ? Colors.white
+                                            : green,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                        fontFamily: 'Inter',
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          );
-                        }).toList(),
-                      ),
+                            );
+                          }).toList(),
+                        ),
                       const SizedBox(height: 24),
                     ],
                   ),
